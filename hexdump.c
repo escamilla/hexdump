@@ -13,20 +13,38 @@ enum format
 	FORMAT_OCTAL
 };
 
-void print_usage();
-void print_help();
+static const char *usage = "Usage: hexdump [-dhHo] [-b count] [--help]";
+
+static const char *options = 
+	"Options:\n"
+	"    -b count\n"
+	"          Display `count' bytes per line (default value: 8)\n"
+	"    -d\n"
+	"          Display data in decimal format\n"
+	"    -h\n"
+	"          Display data in lowercase hexadecimal format.\n"
+	"          This is the default behavior.\n"
+	"    -H\n"
+	"          Display data in uppercase hexadecimal format\n"
+	"    -o\n"
+	"          Display data in octal format\n"
+	"    --help\n"
+	"          Display this help and exit.";
+
 void dump_file(FILE *fp, int format, int bytes_per_line);
 
 int main(int argc, char *argv[])
 {
 	if (argc == 1) {
-		print_usage();
+		puts(usage);
 		return EXIT_SUCCESS;
 	}
 
 	for (int i = 1; i < argc; ++i) {
 		if (!strcmp("--help", argv[i])) {
-			print_help();
+			puts(usage);
+			putchar('\n');
+			puts(options);
 			return EXIT_SUCCESS;
 		}
 	}
@@ -80,31 +98,6 @@ int main(int argc, char *argv[])
 	}
 
 	return EXIT_SUCCESS;
-}
-
-void print_usage()
-{
-	puts("Usage: hexdump [-dhHo] [-b count] [--help]");
-}
-
-void print_help()
-{
-	print_usage();
-	putchar('\n');
-	puts("Options:");
-	puts("    -b count");
-	puts("          Display `count' bytes per line (default value: 8)");
-	puts("    -d");
-	puts("          Display data in decimal format");
-	puts("    -h");
-	puts("          Display data in lowercase hexadecimal format.");
-	puts("          This is the default behavior.");
-	puts("    -H");
-	puts("          Display data in uppercase hexadecimal format");
-	puts("    -o");
-	puts("          Display data in octal format");
-	puts("    --help");
-	puts("          Display this help and exit.");
 }
 
 void dump_file(FILE *fp, int format, int bytes_per_line)
