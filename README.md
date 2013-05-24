@@ -1,3 +1,3 @@
-Hexdumper
-=========
-A simple hexdump program that can print byte values in hexadecimal, octal, and decimal.
+hexdump
+=======
+A simple program that shows the contents of a file in hexadecimal, octal, or decimal formats.
