@@ -165,3 +165,4 @@ void dump_file(FILE *fp, int format, int bytes_per_line)
 		putchar('\n');
 	}
 }
+
