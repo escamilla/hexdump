@@ -105,28 +105,29 @@ void dump_file(FILE *fp, int format, int bytes_per_line)
     if (fp == NULL) return;
 
     unsigned char bytes[bytes_per_line];
-    unsigned int number_bytes_read;
-    unsigned int pos;
+    size_t number_bytes_read;
+    long pos;
 
     for ( ; ; ) {
         pos = ftell(fp);
 
         number_bytes_read = fread(bytes, sizeof(unsigned char),
-            bytes_per_line, fp);
+                                  (size_t) bytes_per_line, fp);
         if (!number_bytes_read) break;
 
         switch (format) {
             case FORMAT_DECIMAL:
-                printf("%08d", pos);
+                printf("%08li", pos);
                 break;
             case FORMAT_HEXADECIMAL_LOWER:
-                printf("%08x", pos);
+                printf("%08lx", pos);
                 break;
             case FORMAT_HEXADECIMAL_UPPER:
-                printf("%08X", pos);
+                printf("%08lX", pos);
                 break;
             case FORMAT_OCTAL:
-                printf("%08o", pos);
+                printf("%08lo", pos);
+                break;
         }
 
         fputs("  ", stdout);
@@ -145,6 +146,7 @@ void dump_file(FILE *fp, int format, int bytes_per_line)
                         break;
                     case FORMAT_OCTAL:
                         printf("%03o", bytes[i]);
+                        break;
                 }
                 putchar(' ');
             } else {
