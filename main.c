@@ -5,8 +5,7 @@
 #include <string.h>
 #include <unistd.h>
 
-enum format
-{
+enum format {
     FORMAT_DECIMAL,
     FORMAT_HEXADECIMAL_LOWER,
     FORMAT_HEXADECIMAL_UPPER,
@@ -33,8 +32,7 @@ static const char *options =
 
 void dump_file(FILE *fp, int format, int bytes_per_line);
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     if (argc == 1) {
         puts(usage);
         return EXIT_SUCCESS;
@@ -58,9 +56,8 @@ int main(int argc, char *argv[])
             case 'b':
                 bytes_per_line = atoi(optarg);
                 if (!bytes_per_line) {
-                    fprintf(stderr, "%s: invalid argument "
-                        "for option -b: %s\n", argv[0],
-                        optarg);
+                    fprintf(stderr, "%s: invalid argument for option -b: %s\n",
+                            argv[0], optarg);
                     return EXIT_FAILURE;
                 }
                 break;
@@ -88,8 +85,8 @@ int main(int argc, char *argv[])
         FILE *fp = fopen(filename, "rb");
 
         if (fp == NULL) {
-            fprintf(stderr, "Error opening file \"%s\": %s\n",
-                filename, strerror(errno));
+            fprintf(stderr, "Error opening file \"%s\": %s\n", filename,
+                    strerror(errno));
             return EXIT_FAILURE;
         }
 
@@ -100,15 +97,14 @@ int main(int argc, char *argv[])
     return EXIT_SUCCESS;
 }
 
-void dump_file(FILE *fp, int format, int bytes_per_line)
-{
+void dump_file(FILE *fp, int format, int bytes_per_line) {
     if (fp == NULL) return;
 
     unsigned char bytes[bytes_per_line];
     size_t number_bytes_read;
     long pos;
 
-    for ( ; ; ) {
+    for (;;) {
         pos = ftell(fp);
 
         number_bytes_read = fread(bytes, sizeof(unsigned char),
@@ -167,4 +163,3 @@ void dump_file(FILE *fp, int format, int bytes_per_line)
         putchar('\n');
     }
 }
-
