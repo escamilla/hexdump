@@ -5,6 +5,7 @@ Hexdump is a utility that can display the contents of a file in hexademical, dec
 Build Instructions
 ------------------
 ```
+git clone https://github.com/escamilla/hexdump
 cd hexdump/
 cmake .
 make
